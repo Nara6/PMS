@@ -36,3 +36,23 @@ To serve the project
 ```bash
 ng serve
 ```
+## File
+
+### Installation && Set up
+below command for install node package
+```bash
+npm install
+```
+### Migrate && Seed Data
+Migrate all tables
+```bash
+npm run migrate
+```
+Seed data to tables
+```bash 
+npm run seed
+```
+To start the project
+```bash
+npm run start:dev
+```
