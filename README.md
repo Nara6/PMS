@@ -32,10 +32,7 @@ export const environment = {
 
 };
 ```
+To serve the project
 ```bash
-npm typeorm:run-migrations
-```
-To run the project
-```bash
-npm run start:dev
+ng serve
 ```
