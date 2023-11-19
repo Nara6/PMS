@@ -1,0 +1,19 @@
+.container-dashboard-section {
+    width: 100%;
+    height: calc(100dvh - 4.875rem) !important;
+}
+
+.custom-shadow {
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.05), -5px -5px 5px rgba(240, 240, 240, 0.3);
+}
+.dashboard-grid{
+    width: 100%;
+    display: grid;
+    padding: 1rem 0 ;
+    gap: 2rem;
+    grid-template-columns: repeat(auto-fill,18rem);
+    max-height: 100%;
+    overflow: auto;
+    place-items: center;
+    justify-content: center;
+}

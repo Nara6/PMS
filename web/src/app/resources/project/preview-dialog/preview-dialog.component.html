@@ -1,0 +1,109 @@
+<div class="w-full" *ngIf="data">
+    <form [formGroup]="data_preview">
+        <div class="p-5 items-center">
+            <div class="flex justify-between">
+                <p class="font-bold w-full"><input matInput [formControlName]="'en_name'" class="w-full" type="text">
+                </p>
+                <div>
+                    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="icon-button with a menu">
+                        <mat-icon class="icon-size-6" svgIcon="mat_outline:more_vert"></mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item (click)="delete(data.id)">
+                            <mat-icon class="icon-size-5 text-red-400" svgIcon="mat_solid:delete_outline"></mat-icon>
+                            <span class="text-lg text-red-400">លុបទិន្នន័យ</span>
+                        </button>
+                        <button mat-menu-item (click)="update(data)">
+                            <mat-icon class="icon-size-5 text-blue-400" svgIcon="mat_solid:photo"></mat-icon>
+                            <span class="text-lg text-blue-400">កែរូបភាព</span>
+                        </button>
+                    </mat-menu>
+                    <!-- <mat-icon class="icon-size-6" svgIcon="mat_outline:more_vert"></mat-icon> -->
+                </div>
+            </div>
+            <!-- line -->
+            <div class="border-[1px]"></div>
+        </div>
+
+        <div class="p-9 pt-0 pb-0">
+            <!-- <mat-icon class="icon-size-6" svgIcon="mat_outline:arrow_drop_down"></mat-icon> -->
+            <mat-form-field appearance="outline" class="w-full">
+                <mat-label class="font-bold">Status</mat-label>
+
+                <mat-select [formControlName]="'status_id'">
+                    <mat-option *ngFor="let item of project_setup?.ProjectStatus" [value]="item.id">
+                        {{item.name}}
+                    </mat-option>
+                    <!-- <mat-error class="min-h-6 mt-2.5 text-sm">
+                        Khmer name is required
+                    </mat-error> -->
+                </mat-select>
+                <!-- <p>{{status}}</p> -->
+
+            </mat-form-field>
+        </div>
+        <div class="p-9 pt-0 pb-0">
+            <!-- <mat-icon class="icon-size-6" svgIcon="mat_outline:arrow_drop_down"></mat-icon> -->
+            <mat-form-field appearance="outline" class="w-full">
+                <mat-label class="font-bold">Type</mat-label>
+                <mat-select [formControlName]="'type_id'">
+                    <mat-option *ngFor="let item of project_setup?.ProjectType" [value]="item.id">
+                        {{item.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="p-9 pt-0 pb-0">
+            <!-- <mat-icon class="icon-size-6" svgIcon="mat_outline:arrow_drop_down"></mat-icon> -->
+            <mat-form-field class="w-full">
+                <mat-label class="opacity-30">Start date</mat-label>
+                <input matInput [matDatepicker]="start_date" [formControlName]="'start_date'">
+                <mat-hint class="opacity-30">MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="start_date"></mat-datepicker-toggle>
+                <mat-datepicker #start_date></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div class="p-9 pt-0 pb-0">
+            <!-- <mat-icon class="icon-size-6" svgIcon="mat_outline:arrow_drop_down"></mat-icon> -->
+            <mat-form-field class="w-full">
+                <mat-label class="opacity-30">Due date</mat-label>
+                <input matInput [matDatepicker]="due_start" [formControlName]="'due_date'">
+                <mat-hint class="opacity-30">MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="due_start"></mat-datepicker-toggle>
+                <mat-datepicker #due_start></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div class="pl-9">
+            <div class="w-[100px] border-[0.5px] border-black opacity-25"></div>
+        </div>
+        <div class="p-9 pt-0 flex justify-between items-center">
+            <span class="font-bold opacity-50">Assigned:</span>
+
+            <div class="flex items-center gap-x-2">
+                <img class="w-15 h-15 rounded-full" [src]="data.ProjectsUser[0]?.Users.avatar? fileUrl+data.ProjectsUser[0].Users.avatar : 'assets/images/avatars/no-photo.png'" alt="">
+
+                <div class=" flex flex-col">
+                    <span>{{data.ProjectsUser[0]?.Users? data.ProjectsUser[0].Users.kh_name : 'N/A'}}</span>
+                    <span class="font-bold">{{data.ProjectsUser[0]?.ProjectsUserRole? data.ProjectsUser[0].ProjectsUserRole.name : 'N/A' }}</span>
+                </div>
+    
+            </div>
+            
+        </div>
+        <div class="p-9 pt-0 flex justify-between items-center">
+            <span class="font-bold opacity-50">Application:</span>
+            <div>N/A</div>
+        </div>
+        <div class="p-9 pt-0 flex justify-between items-center">
+            <span class="font-bold opacity-50">Technology:</span>
+            <div>N/A</div>
+        </div>
+        <div class="p-5 flex justify-end">
+            <button (click)="submit()" class="font-bold text-white p-2 pl-4 pr-4 border rounded-md bg-[#00E19B]">
+                <span *ngIf="!loading" class="text-lg">Update</span>
+                <mat-progress-spinner *ngIf="loading" [diameter]="24" [mode]="'indeterminate'"></mat-progress-spinner>
+            </button>
+        </div>
+    </form>
+
+</div>

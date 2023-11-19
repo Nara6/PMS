@@ -1,0 +1,147 @@
+<mat-drawer-container class="w-full bg-white h-[90vh]" hasBackdrop="true">
+    <mat-drawer #drawer mode="over" position="end" class="rounded-l-lg w-[40%]">
+        <app-preview-dialog [data]="parseData" ></app-preview-dialog>
+    </mat-drawer>
+    <mat-drawer-content>
+        <div class="listing-project-section w-full h-full">
+            <div class="min-h-15 max-h-15 flex w-full gap-2 justify-between items-center py-2 pl-5 pr-2.5">
+                <div class="flex flex-1 items-center font-medium">
+                    <div class="flex items-center whitespace-nowrap">
+                        <mat-icon class="text-gray-600 icon-size-4.5" matPrefix
+                            [svgIcon]="'heroicons_solid:home'"></mat-icon>
+                    </div>
+                    <div class="flex items-center -ml-1 whitespace-nowrap">
+                        <mat-icon class="icon-size-6 text-gray-600 -mb-0.5" [svgIcon]="'heroicons_solid:chevron-right'">
+                        </mat-icon>
+                        <span class="text-lg -mb-0.5 text-gray-600">Project</span>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <div class="flex items-center min-w-[260px] max-w-[260px] h-10 border-2 rounded-xl overflow-hidden">
+                        <input placeholder="Search by name" type="text" class="w-full px-3 h-10" [(ngModel)]="key">
+                        <button mat-flat-button class="rounded-none min-w-12 max-w-12 px-0 bg-slate-200">
+                            <mat-icon class="icon-size-7 text-slate-700" svgIcon="mat_solid:search"></mat-icon>
+                        </button>
+                    </div>
+                    <a class="min-w-14 max-w-14 rounded-xl bg-slate-200" mat-flat-button (click)="create()">
+                        <mat-icon class="icon-size-8" svgIcon="heroicons_outline:plus"></mat-icon>
+                    </a>
+                </div>
+            </div>
+            <div class="container-listing-project-body">
+                <ng-container *ngIf="loading">
+                    <div class="min-w-26 w-full flex flex-col items-center overflow-hidden min-h-30 p-2 mt-6">
+                        <p class="text-xl mb-4">សូមរងចាំ! កំពុងទាញទិន្នន័យ</p>
+                        <div class="lds-spinner">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
+                    </div>
+                </ng-container>
+                <ng-container>
+                    <div *ngIf=" loading&&data?.length===0 " class="flex flex-col justify-center items-center mb-4">
+                        <mat-icon class="icon-size-24" svgIcon="toc"></mat-icon>
+                        <span class="text-2xl"><span>គ្មានទិន្នន័យ</span></span>
+                    </div>
+                </ng-container>
+                <div class="container-listing-project-content hidden flex-col" [ngClass]="{'flex-custom': !loading }">
+                    <div class="container-listing-project-data">
+                        <table mat-table [dataSource]="dataSource">
+                            <ng-container matColumnDef="no">
+                                <th mat-header-cell *matHeaderCellDef> No. </th>
+                                <td mat-cell *matCellDef="let i=index"> {{i+1}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="project">
+                                <th mat-header-cell *matHeaderCellDef> Project </th>
+                                <td mat-cell *matCellDef="let element">
+                                    <div class="flex">
+                                        <img class="rounded-full min-w-15 max-w-15 min-h-15 max-h-15 object-cover"
+                                            [src]="element.icon? fileUrl+element.icon : 'assets/images/logo/mpwt-logo.jpeg'" alt="icon">
+                                        <div class="flex flex-col justify-between p-2 w-full">
+                                            <span
+                                                class="font-bold w-[270px]">{{element.en_name}}</span>
+                                            <span>{{element?.abbre}}</span>
+                                        </div>
+                                    </div>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="type">
+                                <th mat-header-cell *matHeaderCellDef> Type </th>
+                                <td mat-cell *matCellDef="let element"> {{element?.ProjectsType.name}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="status">
+                                <th mat-header-cell *matHeaderCellDef> Status </th>
+                                <td mat-cell *matCellDef="let element">
+                                    <div class="
+                                    test
+                                    flex
+                                    items-center
+                                    justify-center
+                                    w-[100px]
+                                    h-[45px] 
+                                    font-medium
+                                    rounded-[5px]
+                                    border-[2px]
+                                    opacity-90
+                                    " [style.border-color]="element?.ProjectsStatus.color"
+                                        [style.color]="element?.ProjectsStatus.color">
+                                        {{element?.ProjectsStatus.name}}
+                                    </div>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="start-date">
+                                <th mat-header-cell *matHeaderCellDef> Start-date </th>
+                                <td mat-cell *matCellDef="let element"> {{element?.start_date | date:'dd MMM,yyyy'}}
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="due-date">
+                                <th mat-header-cell *matHeaderCellDef> Due-date </th>
+                                <td mat-cell *matCellDef="let element"> {{element?.due_date | date: 'dd MMM,yyyy'}}
+                                </td>
+                            </ng-container>
+                            <!-- <ng-container matColumnDef="action" stickyEnd>
+                                <th mat-header-cell *matHeaderCellDef aria-label="row actions" class="z-999"></th>
+                                <td mat-cell *matCellDef="let element" class="bg-white z-0 -right-1">
+                                    <button mat-icon-button [matMenuTriggerFor]="menu"
+                                        aria-label="icon-button with a menu">
+                                        <mat-icon class="icon-size-6" svgIcon="mat_outline:more_vert"></mat-icon>
+                                    </button>
+                                    <mat-menu #menu="matMenu">
+                                        <button mat-menu-item (click)="viewDetail(element?.id)">
+                                            <mat-icon class="icon-size-5" svgIcon="heroicons_outline:eye"></mat-icon>
+                                            <span class="text-lg text-gray-500">មើលលំអិត</span>
+                                        </button>
+                                        <button mat-menu-item>
+                                            <mat-icon class="icon-size-5 text-blue-500"
+                                                svgIcon="heroicons_outline:pencil"></mat-icon>
+                                            <span class="text-lg text-blue-500">កែប្រែទិន្នន័យ</span>
+                                        </button>
+                                        <button mat-menu-item (click)="delete(element?.id)">
+                                            <mat-icon class="icon-size-5 text-red-400"
+                                                svgIcon="mat_solid:delete_outline"></mat-icon>
+                                            <span class="text-lg text-red-400">លុបទិន្នន័យ</span>
+                                        </button>
+                                    </mat-menu>
+                                </td>
+                            </ng-container> -->
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                            <tr class="hover:bg-slate-200 hover:cursor-pointer" mat-row (click)="viewDetail(drawer, row)"
+                                *matRowDef="let row; columns: displayedColumns;"></tr>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </mat-drawer-content>
+</mat-drawer-container>

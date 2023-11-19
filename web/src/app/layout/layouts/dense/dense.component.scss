@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+Chettan+2&family=Calligraffitti&display=swap');
+
+.custom-main-section-dense {
+    height: 100vh;
+
+    .container-section-dense {
+        .container-body-section {
+            height: calc(100dvh - 4.875rem) !important;
+            overflow: auto !important;
+        }
+    }
+}
+
+.navigation-item:hover:not(.navigation-item-active) {
+    background-color: #c2e7ff44 !important;
+}
+
+.navigation-item-active {
+    background-color: #C2E7FF !important;
+}
+
+.logo-pms {
+    min-width: 3rem;
+    max-width: 3rem;
+    height: 3rem;
+}
+
+.text-style {
+    font-weight: 600;
+    text-shadow: 1px 1px 1px #C2E7FF,
+        2px 2px 0px #6868AC,
+        3px 3px 0px #90B1E0;
+}
+
+.font-calligraffitti {
+    font-family: 'Calligraffitti', cursive !important;
+}
+

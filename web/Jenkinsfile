@@ -1,0 +1,38 @@
+pipeline {
+    agent any
+    environment {
+        BOT_TOKEN = credentials('BOT_TOKEN')
+        CHAT_ID = credentials('CHAT_ID')
+    }
+
+    stages {
+        stage('Start') {
+            steps {
+                echo 'Build Jenkins'
+            }
+        }
+        stage('Deploy'){
+            steps {
+                echo "Deployment Loading...!"
+                sh 'sudo docker-compose -f ../docker-compose.yml up -d --build web' // /var/lib/jenkins/workspace/CamCyber_Project/PMS/API
+            }
+        }
+        stage('Ending'){
+            steps {
+                echo "Thank you jenkins!"
+            }
+        }
+    }
+    post{
+        success{
+            sh '''
+            sh 1-success-deploy.sh;\
+            '''
+        }
+        failure{
+            sh '''
+            sh 2-fail-deploy.sh;\
+            '''
+        }
+    }
+}

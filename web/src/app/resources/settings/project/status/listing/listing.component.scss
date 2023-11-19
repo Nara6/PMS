@@ -1,0 +1,21 @@
+.listing-title-section {
+    width: 100%;
+    height: calc(100dvh - 4.875rem) !important;
+}
+.color-box {
+    width: 70px;
+    height: 35px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+    /* Added transition for smooth hover effect */
+  }
+  
+  .color-text {
+    font-size: 14px;
+  }
+  
+  .color-box:hover {
+    opacity: 0.5;
+    /* Change opacity on hover */
+  }

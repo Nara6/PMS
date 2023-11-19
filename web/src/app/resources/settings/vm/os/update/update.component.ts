@@ -1,0 +1,62 @@
+import { Component, Inject, OnInit } from '@angular/core';
+import { FormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { SnackbarService } from 'app/shared/services/snackbar.service';
+import { GlobalConstants } from 'app/shared/global-constants';
+import { OsService } from '../os.service';
+import { environment as env } from 'environments/environment';
+
+@Component({
+    selector: 'app-update',
+    templateUrl: './update.component.html',
+    styleUrls: ['./update.component.scss']
+})
+export class UpdateComponent implements OnInit {
+    public data: UntypedFormGroup;
+    fileUrl: string = env.fileUrl;
+    src: string;
+    constructor(
+        @Inject(MAT_DIALOG_DATA) public item: any,
+        private readonly formBuilder: FormBuilder,
+        private readonly snackBarService: SnackbarService,
+        private readonly osService : OsService,
+        private dialogRef: MatDialogRef<UpdateComponent>,
+    ){}
+    ngOnInit(): void {
+        // console.log(this.item);
+        this.src = this.fileUrl+this.item.icon;
+        this.ngBuildForm();
+    }
+    ngBuildForm(): void {
+        this.data = this.formBuilder.group({
+            name: [this.item.name, [Validators.required]],
+            icon: [this.item.icon, [Validators.required]],
+        });
+
+    }
+    submit(data: any):void{
+        this.data.disable();
+        // console.log(data);
+        this.osService.update(data.id,this.data.value).subscribe({
+          next: (res)=>{
+            // console.log(res);
+            this.dialogRef.close(true);
+            this.snackBarService.openSnackBar(res.message, GlobalConstants.success);
+          },
+          error: (err) => {
+            this.data.enable();
+            // this.loading = false;
+            const errors: { sfield: string, message: string }[] | undefined = err.error.errors;
+            var message: string = err.error.message;
+            if (errors && errors.length > 0) {
+                message = errors.map((obj) => obj.message).join(', ')
+            }
+            this.snackBarService.openSnackBar(message, GlobalConstants.error);
+        }
+        })
+    }
+    srcChange(event: string): void {
+        this.data.get('icon').setValue(event);
+
+    }
+}

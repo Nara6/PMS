@@ -1,0 +1,60 @@
+<!-- Navigation -->
+<helpers-navigation class="bg-slate-100" [appearance]="navigationAppearance" [mode]="isScreenSmall ? 'over' : 'side'"
+    [name]="'mainNavigation'" [navigation]="navigation.default" [opened]="!isScreenSmall">
+    <!-- Navigation header hook -->
+    <ng-container NavigationContentHeader>
+        <!-- Logo -->
+        <div class="flex items-center justify-between min-h-15 max-h-15 p-0">
+
+            <!-- Logo -->
+            <div class="pl-3.5 flex items-center gap-1">
+                <img class="logo-pms" src="assets/images/logo/pms-v1.png" alt="Logo image">
+                <div class="border-[0.5px] h-[45px] border-gray-400"></div>
+                <!-- <div class="text-left text-slate-700 text-7xl text-style -mb-1.5">PMS</div> -->
+                <img src="assets/images/logo/ministry.png" alt="logo" class="h-fit w-[150px]">
+            </div>
+
+            <div class="flex items-center pr-2 space-x-2">
+                <!-- Navigation appearance toggle button -->
+                <button class="hidden md:inline-flex z-10" mat-icon-button (click)="toggleNavigationAppearance()">
+                    <mat-icon class="text-slate-700" [svgIcon]="'heroicons_outline:menu'"></mat-icon>
+                </button>
+                <button class="inline-flex md:hidden" mat-icon-button (click)="toggleNavigation('mainNavigation')">
+                    <mat-icon class="text-slate-700" svgIcon="mat_outline:arrow_back"></mat-icon>
+                </button>
+            </div>
+        </div>
+    </ng-container>
+</helpers-navigation>
+
+<!-- Wrapper -->
+<div class="flex flex-col flex-auto w-full min-w-0 custom-main-section-dense bg-slate-100">
+
+    <!-- Header -->
+    <div class="sticky top-0 z-99 flex flex-0 items-center w-full min-h-15 max-h-15 px-4 md:pl-0">
+        <div class="flex items-center">
+            <!-- Navigation toggle button -->
+            <button class="inline-flex md:hidden" mat-icon-button (click)="toggleNavigation('mainNavigation')">
+                <mat-icon class="text-slate-700" [svgIcon]="'heroicons_outline:menu'"></mat-icon>
+            </button>
+            <!-- <search></search> -->
+            <ng-container *ngIf="role != ''">
+                <span class="text-slate-700 text-4xl font-calligraffitti text-style mt-2">{{role}}</span>
+            </ng-container>
+        </div>
+        <!-- Components -->
+        <div class="flex items-center pl-2 ml-auto space-x-0.5 sm:space-x-2">
+            <languages></languages>
+            <full-screen class="hidden md:block"></full-screen>
+            <user></user>
+        </div>
+    </div>
+
+    <!-- Content -->
+    <div class="flex relative flex-col flex-auto container-section-dense pt-0.5 px-4 pb-4 md:pl-0">
+        <div class="container-body-section bg-white rounded-2xl h-[90vh]">
+            <router-outlet *ngIf="true"></router-outlet>
+        </div>
+    </div>
+
+</div>

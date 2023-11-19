@@ -1,0 +1,32 @@
+::-webkit-input-placeholder {
+    color: #000;
+    opacity: 20%;
+}
+
+::ng-deep .portrait {
+    width: 20px !important;
+    height: 20px !important;
+}
+
+::ng-deep .img-center {
+    opacity: 0.7;
+}
+
+.custom-input {
+    /* Your custom styles for the input */
+    background-color: #f0f0f0;
+    /* Background color */
+    color: #333;
+    /* Text color */
+    border: 1px solid #ccc;
+    /* Border color */
+    // padding: 8px; /* Padding */
+    border-radius: 4px;
+    /* Border radius */
+}
+
+.custom-input:hover {
+    background-color: #e0e0e0;
+    /* Background color on hover */
+    border: 1px solid #999;
+}

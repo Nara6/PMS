@@ -1,0 +1,106 @@
+.listing-server-section {
+    width: 100%;
+    height: calc(100dvh - 4.875rem) !important;
+    overflow: hidden;
+
+    .listing-server-body {
+        width: 100%;
+        height: calc(100dvh - 8.625rem);
+        overflow: hidden;
+
+        .listing-server-content {
+            gap: 0.2rem !important;
+            width: 100%;
+            height: calc(100dvh - 8.625rem);
+            overflow: hidden;
+
+            .listing-server-data {
+                width: 100%;
+                height: calc(100dvh - 11.6rem);
+                overflow: auto;
+            }
+        }
+    }
+}
+
+
+table {
+    width: 100%;
+}
+
+
+.listing-server-data .mat-cell {
+    padding: 3px 6px !important;
+    color: rgb(71 85 105) !important;
+    font-size: 15px !important;
+    font-weight: 500 !important;
+}
+
+.listing-server-data .mat-header-cell {
+    font-size: 1rem !important;
+    padding: 0 !important;
+    color: rgb(30, 41, 59) !important;
+    z-index: 100 !important;
+}
+
+.listing-server-data .mat-column-no {
+    min-width: 70px;
+    width: 70px;
+    max-width: 70px;
+    text-align: center;
+}
+
+.listing-server-data .mat-column-name {
+    min-width: 10rem;
+    text-align: left;
+    padding: 3px 2rem !important;
+}
+
+.listing-server-data .mat-column-ip {
+    min-width: 5rem;
+    text-align: left;
+    padding: 3px 2rem !important;
+}
+
+.listing-server-data .mat-column-env {
+    min-width: 10rem;
+    text-align: left;
+    padding: 3px 2rem !important;
+}
+
+.listing-server-data .mat-column-n_of_service {
+    min-width: 15rem;
+    padding: 3px 6px 3px 2rem !important;
+}
+
+.listing-server-data .mat-column-n_of_vpns {
+    min-width: 15rem;
+    padding: 3px 6px 3px 2rem !important;
+}
+
+.listing-server-data .mat-column-n_of_server_access {
+    min-width: 10rem;
+    padding: 3px 6px 3px 2rem !important;
+}
+
+.listing-server-data .mat-column-created_at {
+    min-width: 6rem !important;
+}
+
+.listing-server-data .mat-column-action {
+    flex: none;
+    width: 2rem;
+    margin-right: -2px !important;
+}
+
+.flex-custom {
+    display: flex !important;
+}
+
+::placeholder {
+    color: rgb(100 116 139) !important;
+}
+
+::-ms-input-placeholder {
+    color: rgb(100 116 139) !important;
+}

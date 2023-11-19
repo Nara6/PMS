@@ -1,0 +1,12 @@
+.custom-button:disabled {
+    background-color: rgb(226 232 240) !important;
+    color: #9da9bb !important;
+    cursor: not-allowed !important;
+}
+
+.custom-button:enabled {
+    background-color: #C2E7FF !important;
+    --tw-text-opacity: 1 !important;
+    color: rgb(51 65 85 / var(--tw-text-opacity)) !important;
+    cursor: pointer !important;
+}

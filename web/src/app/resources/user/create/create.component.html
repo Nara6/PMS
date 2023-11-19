@@ -1,0 +1,317 @@
+<div class="create-user-section w-full">
+    <div class="min-h-15 max-h-15 flex gap-2 items-center py-2 px-2.5 custom-shadow">
+        <a class="min-w-14 max-w-14 rounded-xl bg-slate-200" mat-flat-button [routerLink]="['../']">
+            <mat-icon class="icon-size-6" svgIcon="mat_outline:arrow_back"></mat-icon>
+        </a>
+        <span class="text-lg -mb-0.5 text-gray-600">Create Account User</span>
+    </div>
+    <div class="create-user-body p-5">
+        <form class="grid grid-cols-1 sm:grid-cols-6 gap-5" [formGroup]="create">
+            <div class="sm:col-span-3 lg:col-span-2 bg-slate-100 rounded-2xl h-fit sticky top-0">
+                <div class="header-profile min-h-15 max-h-15 flex items-center p-5">
+                    <strong class="text-xl ml-0.5">Profile photo</strong>
+                </div>
+                <mat-divider></mat-divider>
+                <div class="p-5 lg:pt-10">
+                    <div class="w-full md:min-w-64 flex justify-center">
+                        <div class="pr-0 md:pr-5 w-full max-w-64 min-h-64 overflow-hidden relative">
+                            <app-portrait [disabled]="loading" [mode]="'UPLOAD'" [title]="'Upload New Photo'" [src]="src"
+                                (srcChange)='srcChange($event)'></app-portrait>
+                        </div>
+                    </div>
+                    <div class="box-shadow rounded-2xl mx-5 p-5 text-center bg-white leading-loose">
+                        Upload a new avatar. Langer image will be resized automatically. Maximum upload size is
+                        <strong>10 MB</strong>
+                    </div>
+                    <div class="text-center px-5 pt-5">
+                        <!-- <span>Member Since: </span>
+                        <strong>{{currentDate | date:'dd MMMM yyyy'}}</strong> -->
+                    </div>
+                </div>
+
+            </div>
+            <div class="sm:col-span-3 lg:col-span-4 bg-slate-100 rounded-2xl h-fit">
+                <div class="header-profile min-h-15 max-h-15 flex items-center p-5">
+                    <strong class="text-xl ml-0.5">User Information</strong>
+                </div>
+                <mat-tab-group #tabGroup>
+                    <mat-tab label="User Info" [disabled]="loading">
+                        <ng-template matTabContent>
+                            <div
+                                class="custom-form custom-mat-select w-full grid grid-cols-1 lg:grid-cols-2 gap-0 lg:gap-5">
+                                <div>
+                                    <label for="kh_name" class="cursor-pointer">Khmer name</label>
+                                    <mat-form-field appearance="outline" class="w-full mb-6">
+                                        <input id="kh_name" matInput [formControlName]="'kh_name'"
+                                            placeholder="Input your khmer name">
+                                        <mat-error class="min-h-6 mt-2.5 text-sm">
+                                            Khmer name is required
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div>
+                                    <label for="en_name" class="cursor-pointer">English name</label>
+                                    <mat-form-field appearance="outline" class="w-full mb-6">
+                                        <input id="en_name" matInput [formControlName]="'en_name'"
+                                            placeholder="Input your englist name">
+                                        <mat-error class="min-h-6 mt-2.5 text-sm">
+                                            Englist name is required
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div
+                                class="custom-form custom-mat-select w-full grid grid-cols-1 lg:grid-cols-2 gap-0 lg:gap-5">
+                                <div>
+                                    <label for="username" class="cursor-pointer">Username</label>
+                                    <mat-form-field appearance="outline" class="w-full mb-6">
+                                        <input id="username" matInput [formControlName]="'username'"
+                                            placeholder="Input your username">
+                                        <mat-error class="min-h-6 mt-2.5 text-sm">
+                                            <span *ngIf="create.get('username').hasError('required')">Username is required</span>
+                                            <span *ngIf="create.get('username').hasError('forbiddenUsername')">Username format is invalid</span>
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div>
+                                    <label for="vpn" class="cursor-pointer">VPM username</label>
+                                    <mat-form-field appearance="outline" class="w-full mb-6">
+                                        <input id="vpn" matInput [formControlName]="'vpn_account'"
+                                            placeholder="Input your username for vpn">
+                                        <mat-error class="min-h-6 mt-2.5 text-sm">
+                                            <span *ngIf="create.get('vpn_account').hasError('required')">VPN username is required</span>
+                                            <span *ngIf="create.get('vpn_account').hasError('forbiddenUsername')">VPN username format is invalid</span>
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="custom-form custom-mat-select w-full">
+                                <label (click)="department.open()" class="cursor-pointer">Department</label>
+                                <mat-form-field appearance="outline" class="w-full mb-6">
+                                    <mat-select #department formControlName="department_id"
+                                        placeholder="Select your department">
+                                        <ng-container *ngIf="setup?.departments">
+                                            <mat-option *ngFor="let department of setup?.departments" [value]="department?.id">
+                                                <span>{{department?.en_name}}</span>
+                                            </mat-option>
+                                        </ng-container>
+                                    </mat-select>
+                                    <mat-error class="min-h-6 mt-2.5 text-sm">
+                                        Please select the department
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div
+                                class="custom-form custom-mat-select w-full grid grid-cols-1 lg:grid-cols-2 gap-0 lg:gap-5">
+                                <div>
+                                    <label (click)="title.open()" class="cursor-pointer">Title</label>
+                                    <mat-form-field appearance="outline" class="w-full mb-6">
+                                        <mat-select #title formControlName="title_id" placeholder="Select your title">
+                                            <ng-container *ngIf="setup?.titles">
+                                                <mat-option *ngFor="let title of setup?.titles" [value]="title?.id">
+                                                    <span>{{title?.en_name}}</span>
+                                                </mat-option>
+                                            </ng-container>
+                                        </mat-select>
+                                        <mat-error class="min-h-6 mt-2.5 text-sm">
+                                            Please select the title
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div>
+                                    <label (click)="office.open()" class="cursor-pointer">Office</label>
+                                    <mat-form-field appearance="outline" class="w-full mb-6">
+                                        <mat-select #office formControlName="office_id"
+                                            placeholder="Select your office">
+                                            <ng-container *ngIf="setup?.offices">
+                                                <mat-option *ngFor="let office of setup?.offices" [value]="office?.id">
+                                                    <span>{{office?.en_name}}</span>
+                                                </mat-option>
+                                            </ng-container>
+                                        </mat-select>
+                                        <mat-error class="min-h-6 mt-2.5 text-sm">
+                                            Please select the office
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div
+                                class="custom-form custom-mat-select w-full grid grid-cols-1 lg:grid-cols-2 gap-0 lg:gap-5">
+                                <div>
+                                    <label (click)="position.open()" class="cursor-pointer">Position</label>
+                                    <mat-form-field appearance="outline" class="w-full mb-6">
+                                        <mat-select #position formControlName="position_id"
+                                            placeholder="Select your position">
+                                            <ng-container *ngIf="setup?.positions">
+                                                <mat-option *ngFor="let position of setup?.positions" [value]="position?.id">
+                                                    <span>{{position?.en_name}}</span>
+                                                </mat-option>
+                                            </ng-container>
+                                        </mat-select>
+                                        <mat-error class="min-h-6 mt-2.5 text-sm">
+                                            Please select the position
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div>
+                                    <label (click)="role.open()" class="cursor-pointer">Role</label>
+                                    <mat-form-field appearance="outline" class="w-full mb-6">
+                                        <mat-select #role formControlName="role_id" placeholder="Select your role">
+                                            <ng-container *ngIf="setup?.roles">
+                                                <mat-option *ngFor="let role of setup?.roles" [value]="role?.id">
+                                                    <span>{{role?.en_name}}</span>
+                                                </mat-option>
+                                            </ng-container>
+                                        </mat-select>
+                                        <mat-error class="min-h-6 mt-2.5 text-sm">
+                                            Please select the role
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="custom-textarea">
+                                <label for="about" class="cursor-pointer">About</label>
+                                <mat-form-field appearance="outline" class="w-full mb-6">
+                                    <textarea id="about" matInput [formControlName]="'about'" placeholder="Input your about"></textarea>
+                                    <mat-error class="min-h-6 mt-2.5 text-sm">
+                                        About is required
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                            <mat-divider></mat-divider>
+                            <div class="flex justify-end">
+                                <a [disabled]="!disabledTab2" class="w-full md:w-fit py-4 mt-5 rounded-md" mat-flat-button (click)="disabledTab2 && goToTab(1)">
+                                    <span class="text-lg">Next</span>
+                                </a>
+                            </div>
+                        </ng-template>
+                    </mat-tab>
+                    <mat-tab label="Security" [disabled]="!disabledTab2 || loading">
+                        <ng-template matTabContent>
+                            <div
+                                class="custom-form custom-mat-select w-full grid grid-cols-1 lg:grid-cols-2 gap-0 lg:gap-5">
+                                <div>
+                                    <label for="password" class="cursor-pointer">Password</label>
+                                    <mat-form-field appearance="outline" class="w-full mb-6">
+                                        <input id="password" matInput type="password" [formControlName]="'password'"
+                                            #passwordField placeholder="Input your password">
+                                        <button mat-icon-button type="button" class="-top-0.5"
+                                            (click)="passwordField.type === 'password' ? passwordField.type = 'text' : passwordField.type = 'password'"
+                                            matSuffix>
+                                            <mat-icon class="icon-size-5" *ngIf="passwordField.type === 'password'"
+                                                [svgIcon]="'heroicons_solid:eye-off'"></mat-icon>
+                                            <mat-icon class="icon-size-5" *ngIf="passwordField.type === 'text'"
+                                                [svgIcon]="'heroicons_solid:eye'"></mat-icon>
+                                        </button>
+                                        <mat-error class="min-h-6 mt-2.5 text-sm">
+                                            Password is required
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div>
+                                    <label for="confirm_password" class="cursor-pointer">Confirm password</label>
+                                    <mat-form-field appearance="outline" class="w-full mb-6">
+                                        <input id="confirm_password" matInput type="password"
+                                            [formControlName]="'confirm_password'" #confirmPasswordField
+                                            placeholder="Input your confirm password">
+                                        <button mat-icon-button type="button" class="-top-0.5"
+                                            (click)="confirmPasswordField.type === 'password' ? confirmPasswordField.type = 'text' : confirmPasswordField.type = 'password'"
+                                            matSuffix>
+                                            <mat-icon class="icon-size-5"
+                                                *ngIf="confirmPasswordField.type === 'password'"
+                                                [svgIcon]="'heroicons_solid:eye-off'"></mat-icon>
+                                            <mat-icon class="icon-size-5" *ngIf="confirmPasswordField.type === 'text'"
+                                                [svgIcon]="'heroicons_solid:eye'"></mat-icon>
+                                        </button>
+                                        <mat-error class="min-h-6 mt-2.5 text-sm">
+                                            Confirm password is required
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <mat-divider></mat-divider>
+                            <div class="flex justify-between gap-5">
+                                <a class="w-full md:w-fit py-4 mt-5 rounded-md custom-button" mat-flat-button (click)="goToTab(0)">
+                                    <span *ngIf="true" class="text-lg">Previous</span>
+                                </a>
+                                <a [disabled]="!disabledTab3" class="w-full md:w-fit py-4 mt-5 rounded-md custom-button" mat-flat-button (click)="disabledTab3 && goToTab(2)">
+                                    <span *ngIf="true" class="text-lg">Next</span>
+                                </a>
+                            </div>
+                        </ng-template>
+                    </mat-tab>
+                    <mat-tab label="Contact" [disabled]="!disabledTab3 || loading">
+                        <ng-template matTabContent>
+                            <div class="custom-form custom-mat-select w-full">
+                                <label for="email" class="cursor-pointer">Email address</label>
+                                <mat-form-field appearance="outline" class="w-full mb-6">
+                                    <input id="email" matInput [formControlName]="'email'"
+                                        placeholder="Input your email address">
+                                    <mat-error class="min-h-6 mt-2.5 text-sm">
+                                        Email is required
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div
+                                class="custom-form custom-mat-select w-full grid grid-cols-1 lg:grid-cols-2 gap-0 lg:gap-5">
+                                <div>
+                                    <label for="phone" class="cursor-pointer">Phone number</label>
+                                    <mat-form-field appearance="outline" class="w-full mb-6">
+                                        <input id="phone" matInput [formControlName]="'phone'"
+                                            placeholder="Input your phone number">
+                                        <mat-error class="min-h-6 mt-2.5 text-sm">
+                                            Phone number is required
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div>
+                                    <label for="telegrm" class="cursor-pointer">Username telegram</label>
+                                    <mat-form-field appearance="outline" class="w-full mb-6">
+                                        <input id="telegrm" matInput [formControlName]="'tg_username'"
+                                            placeholder="Input your username for telegram">
+                                        <mat-error class="min-h-6 mt-2.5 text-sm">
+                                            <span *ngIf="create.get('tg_username').hasError('required')">Username telegram is required</span>
+                                            <span *ngIf="create.get('tg_username').hasError('forbiddenUsername')">Username telegram format is invalid</span>
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <mat-divider></mat-divider>
+                            <div class="flex justify-between gap-5">
+                                <a [disabled]="loading" class="w-full md:w-fit py-4 mt-5 rounded-md custom-button" mat-flat-button (click)="goToTab(1)">
+                                    <span class="text-lg">Previous</span>
+                                </a>
+                                <a [disabled]="create.invalid || loading" class="w-full md:w-fit min-w-26 py-4 mt-5 rounded-md custom-button" mat-flat-button (click)="submit()">
+                                    <span *ngIf="!loading" class="text-lg">Create</span>
+                                    <mat-progress-spinner *ngIf="loading" [diameter]="24"
+                                        [mode]="'indeterminate'"></mat-progress-spinner>
+                                </a>
+                            </div>
+                        </ng-template>
+                    </mat-tab>
+                </mat-tab-group>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <ng-template #loadingTemplate class="custom-loading">
+        <div class="overflow-hidden min-h-30">
+            <div class="lds-spinner">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+    </ng-template>
+</div>

@@ -1,0 +1,14 @@
+/* eslint-disable prettier/prettier */
+import { Logger, Module } from '@nestjs/common';
+import { HealthController } from './health.controller';
+import { TerminusModule } from '@nestjs/terminus';
+
+@Module({
+  imports: [TerminusModule.forRoot(
+    {
+      logger: true
+    }
+  )],
+  controllers: [HealthController]
+})
+export class HealthModule {}

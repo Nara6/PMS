@@ -1,0 +1,42 @@
+<div
+    class="w-full
+     p-4 
+     pb-0 
+     rounded-lg 
+     flex-col flex 
+     justify-center 
+     items-center 
+     relative 
+     border 
+     h-[700px]
+     border-dashed 
+     hover:border-green-700
+     mb-4
+     gap-y-5
+     ">
+    <app-portrait (srcChange)="srcChange($event)" [src]="src" [mode]="'UPLOAD'"
+        [title]="'Upload New Photo'"></app-portrait>
+
+    <div (click)="submit()"
+    class="
+    text-white 
+    hover:font-semibold 
+    px-7 
+    py-3
+    rounded-[5px]
+    absolute 
+    right-3 
+    bottom-3 
+    w-[110px]
+    hover: cursor-pointer
+    flex
+    justify-center
+    bg-green-400 
+    hover:bg-green-500">
+        <button *ngIf="!loading">
+            Submit
+        </button>
+        <mat-progress-spinner *ngIf="loading" [diameter]="24" [mode]="'indeterminate'"></mat-progress-spinner>
+    </div>
+    
+</div>

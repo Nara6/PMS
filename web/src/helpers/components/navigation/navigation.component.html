@@ -1,0 +1,38 @@
+<div class="navigation-wrapper">
+
+    <!-- Header -->
+    <div class="navigation-content-header">
+        <ng-content select="[NavigationContentHeader]"></ng-content>
+    </div>
+
+    <!-- Content -->
+    <div class="navigation-content" scrollbar [scrollbarOptions]="{wheelPropagation: inner, suppressScrollX: true}">
+        <!-- Items -->
+        <ng-container *ngFor="let item of navigation; trackBy: trackByFn">
+
+            <!-- Skip the hidden items -->
+            <ng-container *ngIf="(item.hidden && !item.hidden(item)) || !item.hidden">
+
+                <!-- Basic -->
+                <ng-container *ngIf="item.type === 'basic'">
+                    <navigation-basic-item [item]="item" [name]="name"></navigation-basic-item>
+                </ng-container>
+
+                <!-- Collapsable -->
+                <ng-container *ngIf="item.type === 'collapsable'">
+                    <navigation-collapsable-item [item]="item" [name]="name" [autoCollapse]="autoCollapse">
+                    </navigation-collapsable-item>
+                </ng-container>
+
+                <!-- Group -->
+                <ng-container *ngIf="item.type === 'group'">
+                    <navigation-group-item [item]="item" [name]="name" [autoCollapse]="autoCollapse">
+                    </navigation-group-item>
+                </ng-container>
+
+            </ng-container>
+
+        </ng-container>
+    </div>
+
+</div>

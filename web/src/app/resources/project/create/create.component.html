@@ -1,0 +1,171 @@
+<div mat-dialog-title class="">
+    <span class="text-xl font-bold">Create New Project</span>
+</div>
+<mat-dialog-content class="bg-white">
+    <div *ngIf="isLoading" class="w-full flex justify-center items-center">
+        <div class="lds-spinner">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <form [formGroup]="data">
+        <div class="w-full flex gap-x-3">
+            
+            <mat-form-field appearance="outline" class="w-[70%] relative" floatLabel="always">
+                <mat-label>English Name</mat-label>
+                <mat-icon class="icon-size-5 absolute left-0 opacity-50" svgIcon="mat_outline:article"></mat-icon>
+                <input class="placeholder:text-opacity-12 pl-8" [formControlName]="'en_name'" matInput type="text" placeholder="ex. Project Management System">
+                <mat-error class="min-h-6 text-sm">
+                    English name is required
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="w-[30%]" floatLabel="always">
+                <mat-label>Abbre</mat-label>
+                <input [formControlName]="'abbre'" matInput type="text" placeholder="ex. PMS">
+                <mat-error class="min-h-6 text-sm">
+                    Abbre is required
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <mat-form-field appearance="outline" class="w-full relative" floatLabel="always">
+            <mat-icon class="icon-size-5 absolute left-0 opacity-50" svgIcon="mat_outline:article"></mat-icon>
+            <mat-label>Khmer Name</mat-label>
+            <input class="placeholder:text-opacity-12 pl-8" [formControlName]="'kh_name'" matInput type="text" placeholder="ex. ប្រព័ន្ធគ្រប់គ្រងគម្រោង">
+            <mat-error class="min-h-6 text-sm">
+                Khmer name is required
+            </mat-error>
+        </mat-form-field>
+        <div class="w-full flex gap-x-3">
+            <mat-form-field appearance="outline" class="w-full" >
+                <!-- <mat-label class="font-bold">Status</mat-label> -->
+                <mat-label class="font-bold">
+                    <mat-icon class="icon-size-5 absolute left-0 opacity-50" svgIcon="mat_outline:check_box"></mat-icon>
+                    <span class="pl-7">
+                        Status
+                    </span>
+                </mat-label>
+
+                <mat-select [formControlName]="'status_id'">
+                    <mat-option *ngFor="let item of project_setup?.ProjectStatus" [value]="item.id">
+                        {{item.name}}
+                    </mat-option>
+                    
+                </mat-select>
+                <mat-error class="min-h-6 text-sm">
+                    Status is required
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="w-full">
+                <!-- <mat-label class="font-bold">Type</mat-label> -->
+                <mat-label class="font-bold">
+                    <mat-icon class="icon-size-5 absolute left-0 opacity-50" svgIcon="mat_outline:list"></mat-icon>
+                    <span class="pl-7">
+                        Type
+                    </span>
+                </mat-label>
+
+                <mat-select [formControlName]="'type_id'">
+                    <mat-option *ngFor="let item of project_setup?.ProjectType" [value]="item.id">
+                        {{item.name}}
+                    </mat-option>
+                    
+                </mat-select>
+                <mat-error class="min-h-6 text-sm">
+                    Type is required
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="w-full flex gap-x-3">
+            <mat-form-field appearance="outline" class="w-full relative" >
+                <mat-label class="font-bold">
+                    <mat-icon class="icon-size-5 absolute left-0 opacity-50" svgIcon="mat_outline:person_add"></mat-icon>
+                    <span class="pl-7">
+                        Assigne to
+                    </span>
+                </mat-label>
+
+                <mat-select [formControlName]="'user_id'">
+                    <mat-option *ngFor="let item of project_setup?.User" [value]="item.id">
+
+                        <div class="flex gap-x-2">
+                            <span>{{item.kh_name}},</span>
+                            <span>{{item.en_name}}</span>
+                        </div>
+                        
+                    </mat-option>
+                    
+                </mat-select>
+                <mat-error class="min-h-6 text-sm">
+                    Assigne to is required
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="w-full relative">
+                <mat-label class="font-bold">
+                    <mat-icon class="icon-size-5 absolute left-0 opacity-50" svgIcon="mat_outline:manage_accounts"></mat-icon>
+                    <span class="pl-7">
+                        Role
+                    </span>
+                </mat-label>
+                
+
+                <mat-select [formControlName]="'role_id'">
+                    <mat-option *ngFor="let item of project_setup?.Role" [value]="item.id">
+                        <div class="flex gap-x-2">
+                            <span>{{item.name}},</span>
+                            <span>{{item.abbre}}</span>
+                        </div>
+                    </mat-option>
+                    
+                </mat-select>
+                <mat-error class="min-h-6 text-sm">
+                    Role is required
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="w-full flex gap-x-3">
+            <mat-form-field class="w-full" appearance="fill" floatLabel="always">
+                <mat-label class="opacity-30" >Start date</mat-label>
+                <input [formControlName]="'start_date'" matInput [matDatepicker]="start_date" placeholder="ex. 08/01/2023">
+                <mat-hint class="opacity-30">MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="start_date"></mat-datepicker-toggle>
+                <mat-datepicker #start_date></mat-datepicker>
+                <mat-error class="min-h-6 text-sm">
+                    Start date is required
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="w-full" appearance="fill" floatLabel="always">
+                <mat-label class="opacity-30">Due date</mat-label>
+                <input [formControlName]="'due_date'" matInput [matDatepicker]="due_date" placeholder="ex. 09/01/2023">
+                <mat-hint class="opacity-30">MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="due_date"></mat-datepicker-toggle>
+                <mat-datepicker #due_date></mat-datepicker>
+                <mat-error class="min-h-6 text-sm">
+                    Due date is required
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="w-full p-4 pb-0 rounded-lg flex justify-center items-center relative border border-dashed hover:border-green-700">
+            <app-portrait (srcChange)="srcChange($event)" [disabled]="isLoading" [mode]="'UPLOAD'" [title]="'Upload New Photo'"></app-portrait>
+        </div>
+
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions align="center" class="custom-dialog-actions">
+    <button class="min-w-8 max-w-8 rounded-md custom-button" mat-flat-button [disabled]="data.invalid" (click)="submit()">
+        <mat-icon *ngIf="!data.disabled" class="icon-size-6 text-white" svgIcon="mat_solid:save"></mat-icon>
+        <mat-progress-spinner *ngIf="data.disabled" [diameter]="24" [mode]="'indeterminate'"></mat-progress-spinner>
+    </button>
+    <button class="min-w-8 max-w-8 rounded-md" mat-flat-button [mat-dialog-close]="false" color="warn">
+        <mat-icon class="icon-size-6 text-white" [svgIcon]="'heroicons_solid:x'"></mat-icon>
+    </button>
+</mat-dialog-actions>

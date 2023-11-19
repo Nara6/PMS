@@ -1,0 +1,59 @@
+<div class="w-full" *ngIf="data">
+   
+    <div class="h-30 p-5 relative" [ngStyle]="{'background-image': 'url(' + data.cover + ')'}">
+        <!-- circle -->
+        <img class="w-20 h-20 rounded-full bg-black absolute bottom-[-40px]" [src]="data.avatar" alt="">
+
+        <!-- button edit -->
+        <div class="p-4 absolute right-0 bottom-[-60px]">
+            <button [routerLink]="data.id" [state]="data"
+            mat-flat-button class=" bg-purple-400 text-white rounded-full">
+                <mat-icon class="icon-size-5 text-white mr-2"
+                                                svgIcon="mat_outline:edit_note"></mat-icon>
+                <span>Edit</span>
+              </button>
+        </div>
+    </div>
+    <!-- name -->
+    <div class="p-5 mt-[30px] flex flex-col gap-y-3 ">
+        <span class="font-bold text-3xl">{{data.en_name}} ,{{data.kh_name}}</span>
+        <!-- <span class="font-bold text-3xl">យិន សុខណារ៉ា</span> -->
+        <div class="py-1 px-2 w-fit rounded-full bg-slate-200 text-gray-700 font-semibold">{{data.role.en_name}}</div>
+    </div>
+    <!-- divider -->
+    <div class="p-5 ">
+        <mat-divider></mat-divider>
+    </div>
+    <!-- list content -->
+    <div class="flex flex-col gap-y-9 w-full p-7">
+        <div class="flex gap-x-9 items-center">
+            <mat-icon class="icon-size-7" [svgIcon]="'heroicons_outline:briefcase'"></mat-icon>
+            <span>{{data.position.en_name}}, {{data.position.kh_name}} </span>
+        </div>
+        <div class="flex gap-x-9 items-center">
+            <mat-icon class="icon-size-7" [svgIcon]="'heroicons_outline:office-building'"></mat-icon>
+            <span>{{data.department.en_name}}, {{data.office.en_name}}</span>
+        </div>
+        <a href="mailto:{{data?.email}}" target="_blank"
+        class="flex gap-x-9 items-center">
+            <mat-icon class="icon-size-7" [svgIcon]="'mat_outline:mail'"></mat-icon>
+            <span>{{data.email}}</span>
+        </a>
+        <a href="tel:{{data?.phone}}" target="_blank"
+        class="flex gap-x-9 items-center">
+            <mat-icon class="icon-size-7" [svgIcon]="'mat_outline:phone'"></mat-icon>
+            <span>+855 {{data.phone}}</span>
+        </a>
+        <a href="https://t.me/{{data.tg_username}}" target="_blank"
+        class="flex gap-x-9 items-center">
+            <!-- <mat-icon class="icon-size-7" [svgIcon]="'heroicons_outline:phone'"></mat-icon> -->
+            <img class="icon-size-7" src="https://cdn-icons-png.flaticon.com/128/739/739260.png" alt="">
+            <span>{{data.tg_username? data.tg_username: 'N/A'}}</span>
+        </a>
+        <div class="flex gap-x-9 items-center">
+            <mat-icon class="icon-size-7" [svgIcon]="'mat_outline:chat'"></mat-icon>
+            <span>{{data.about? data.about: 'N/A'}}</span>
+        </div>
+    </div>
+
+</div>
